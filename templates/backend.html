@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}
+    Backend
+{% endblock title %}
+
+{#NavBar Content (icon + title)#}
+{% block navbar-content %}
+    <i class="bi bi-people-fill"></i>&nbsp;&nbsp;Patients
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Welcome, Dr {{ user.username }}</h1>
+
+        <!-- Input Search  -->
+        <form method="get">
+            <div class="input-group input-group-sm mb-3 mt-4">
+                {% csrf_token %}
+                <input type="text" name="q" class="form-control" placeholder="Search patient">
+                <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+                <a href="{% url 'patients:backend' %}" class="btn btn-dark" style="margin-left: 2px"><i
+                        class="bi bi-arrow-repeat"></i></a>
+            </div>
+        </form>
+
+        <!-- Table for get the patients -->
+
+        {% if patients %}
+            <div style="text-align: center;">
+                <table class="table table-bordered table-sm mt-5 text-center" style="font-size: 14px">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Smoker</th>
+                        <th>Alcohol</th>
+                        <th>Drugs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for patient in patients %}
+                        <tr>
+                            <td><a href="{% url 'patients:detail_patient' patient.id %}">{{ patient.first_name }}</a>
+                            </td>
+                            <td>{{ patient.last_name }}</td>
+                            <td>{{ patient.age }}</td>
+                            <td>{{ patient.gender }}</td>
+                            <td>
+                                {% if patient.smoker %}
+                                    <i class="bi bi-check-circle-fill" style="color: green"></i>
+                                {% else %}
+                                    <i class="bi bi-x-circle-fill" style="color: red"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if patient.alcohol %}
+                                    <i class="bi bi-check-circle-fill" style="color: green"></i>
+                                {% else %}
+                                    <i class="bi bi-x-circle-fill" style="color: red"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if patient.drugs %}
+                                    <i class="bi bi-check-circle-fill" style="color: green"></i>
+                                {% else %}
+                                    <i class="bi bi-x-circle-fill" style="color: red"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                No patients found
+            </div>
+        {% endif %}
+        <div style="text-align: center;">
+            <a href="{% url 'patients:create_patient' %}" class="btn btn-success btn-sm mt-3">Create new patient</a>
+        </div>
+    </div>
+
+{% endblock content %}

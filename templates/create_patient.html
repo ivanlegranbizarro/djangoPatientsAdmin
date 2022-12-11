@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Add a new patient
+{% endblock title %}
+
+{% block navbar-content %}
+    <i class="bi bi-people-fill"></i>&nbsp;&nbsp;Patients
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="card p-3 border-dark">
+            <span class="btn btn-outline-dark mt-3"><i class="bi bi-person-badge-fill"></i>&nbsp;NEW PATIENT</span>
+            <form method="post" autocomplete="off" class="mt-5" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-sm btn-primary mb-4" id="btn-login">Add</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

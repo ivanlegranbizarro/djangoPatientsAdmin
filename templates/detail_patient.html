@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}
+    Detail of {{ patient.first_name }} {{ patient.last_name }}
+{% endblock title %}
+
+{#NavBar Content (icon + title)#}
+{% block navbar-content %}
+    <i class="bi bi-people-fill"></i>&nbsp;&nbsp;Patient
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Detail of {{ patient.first_name }} {{ patient.last_name }}</h1>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Ey!</strong> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="card-body">
+                <p>First name: {{ patient.first_name }}</p>
+                <p>Last name: {{ patient.last_name }}</p>
+                <p>Age: {{ patient.age }}</p>
+                <p>Gender: {{ patient.gender }}</p>
+                <p>Smoker: {{ patient.smoker }}</p>
+                <p>Alcohol: {{ patient.alcohol }}</p>
+                <p>Drugs: {{ patient.drugs }}</p>
+                <p>Notes: {{ patient.notes }}</p>
+            </div>
+        </div>
+        <div class="container my-5">
+            <div class="card p-3 border-dark">
+                <span class="btn btn-outline-dark mt-3"><i class="bi bi-person-badge-fill"></i>&nbsp;EDIT PATIENT</span>
+                <form action="" method="post" autocomplete="off" class="mt-5" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-sm btn-primary mb-4" id="btn-login">Edit</button>
+                </form>
+                <a href="{% url 'patients:delete_patient' patient.id %}" class="btn btn-sm btn-danger"
+                   style="width: 90px" onclick="return confirm('Are you sure?')">Delete</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+
+

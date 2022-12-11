@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}
+    Login
+{% endblock title %}
+
+{#NavBar Content (icon + title)#}
+{% block navbar-content %}
+    <i class="bi bi-clipboard2-pulse-fill"></i>&nbsp;&nbsp;Login
+{% endblock navbar-content %}
+
+{#Transform Login Button into Back Button#}
+{% block btn-nav %}
+    <a href="{% url 'patients:frontend' %}" class="btn btn-outline-info btn-sm border-light"
+       id="btn-nav">Back</a>
+{% endblock btn-nav %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="card p-3 border-dark">
+            <span class="btn btn-outline-dark mt-3"><i class="bi bi-lock-fill"></i>&nbsp;RESTRICTED ACCESS</span>
+            <form action="" method="post" autocomplete="off" novalidate>
+                {% csrf_token %}
+                <div class="input-group mb-3 mt-5">
+               <span class="input-group-text">
+                   <i class="bi bi-person-bounding-box"></i>
+               </span>
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+                <div class="input-group mb-3 mt-5">
+               <span class="input-group-text">
+                   <i class="bi bi-box-arrow-in-right"></i>
+               </span>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary mb-4" id="btn-login">Login</button>
+            </form>
+        </div>
+        {#Messa for wrong credentials#}
+        {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Oops!</strong> Wrong credentials
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        {#Heart Pulse#}
+        <div class="mt-5" style="text-align: center;">
+            <i class="text-primary bi bi-activity blink_me" style="font-size: 90px"></i>
+        </div>
+    </div>
+{% endblock content %}
